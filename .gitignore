@@ -45,6 +45,4 @@ dist/
 build/
 *.log
 
-# Reference repositories (cloned separately during Phase 0 setup)
-.claude/references/shopify-dawn-theme/
-.claude/references/shopify-horizon-theme/
+
