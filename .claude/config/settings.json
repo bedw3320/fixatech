@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Infrastructure configuration for Shopify Agency Framework agents and skills",
+  "mcp_servers": {
+    "shopify-dev-mcp": {
+      "status": "configured",
+      "command": "npx @modelcontextprotocol/server-shopify-dev",
+      "description": "Shopify API documentation, GraphQL schema introspection, component validation",
+      "used_by": [
+        "platform-architect",
+        "implementation-engineer",
+        "theme-specialist"
+      ],
+      "capabilities": [
+        "learn_shopify_api",
+        "introspect_graphql_schema",
+        "search_docs_chunks",
+        "fetch_full_docs",
+        "validate_component_codeblocks",
+        "validate_graphql_codeblocks",
+        "validate_theme"
+      ],
+      "critical_for": [
+        "API verification",
+        "GraphQL validation",
+        "Preventing capability hallucination"
+      ]
+    },
+    "firecrawl": {
+      "status": "configured",
+      "command": "firecrawl-mcp",
+      "requires_api_key": true,
+      "env_var": "FIRECRAWL_API_KEY",
+      "description": "Web scraping for external API documentation (NetSuite, SAP, etc.)",
+      "used_by": [
+        "integration-researcher",
+        "platform-architect"
+      ],
+      "capabilities": [
+        "firecrawl_scrape",
+        "firecrawl_crawl",
+        "firecrawl_map"
+      ],
+      "critical_for": [
+        "Third-party system research",
+        "ERP/PIM/OMS documentation",
+        "Cross-validation of external sources"
+      ]
+    },
+    "n8n-mcp": {
+      "status": "configured",
+      "command": "n8n-mcp",
+      "description": "Workflow automation node catalog and configuration patterns",
+      "used_by": [
+        "implementation-engineer"
+      ],
+      "capabilities": [
+        "list_nodes",
+        "get_node_info",
+        "search_nodes",
+        "list_ai_tools",
+        "get_node_documentation",
+        "validate_node_operation"
+      ],
+      "critical_for": [
+        "Workflow automation alternatives",
+        "Integration pattern research",
+        "Node configuration validation"
+      ]
+    },
+    "context7": {
+      "status": "configured",
+      "command": "npx -y @context7/mcp",
+      "description": "Library documentation for modern frameworks (Express, React, Shopify SDKs)",
+      "used_by": [
+        "implementation-engineer"
+      ],
+      "capabilities": [
+        "resolve-library-id",
+        "query-docs"
+      ],
+      "supported_libraries": [
+        "Node.js frameworks (Express, Fastify, NestJS)",
+        "Frontend frameworks (React, Vue, Svelte)",
+        "Shopify libraries (@shopify/app, @shopify/cli)",
+        "Database libraries (Prisma, TypeORM)",
+        "1000+ more libraries"
+      ],
+      "critical_for": [
+        "Middleware code generation",
+        "Current API documentation",
+        "Framework-specific patterns"
+      ]
+    }
+  },
+  "mcp_usage_policy": {
+    "high_risk_queries": {
+      "description": "Keywords that trigger mandatory MCP usage",
+      "keywords": [
+        "fee",
+        "rate",
+        "cost",
+        "pricing",
+        "payment",
+        "security",
+        "compliance",
+        "data_loss",
+        "timeline",
+        "estimate"
+      ],
+      "enforcement": "MUST use MCPs for verification, cross-validate 2+ sources",
+      "citation_required": true
+    },
+    "fallback_on_failure": {
+      "action": "Use cached knowledge with date disclaimer",
+      "disclaimer_template": "⚠️ Based on cached data from {date}. MCP unavailable - verify current state at {url}",
+      "max_cache_age_days": 30
+    },
+    "citation_required": true
+  },
+  "reference_repos": {
+    "shopify_theme": {
+      "path": ".claude/references/shopify-horizon-theme",
+      "alternative_path": ".claude/references/shopify-dawn-theme",
+      "description": "Official Shopify reference theme for Liquid patterns and component structure",
+      "source": "https://github.com/Shopify/dawn",
+      "used_by": [
+        "theme-specialist"
+      ],
+      "provides": [
+        "Liquid templating patterns",
+        "Section/block architecture",
+        "Theme settings JSON schemas",
+        "Component naming conventions",
+        "Accessibility patterns",
+        "Performance optimization techniques"
+      ],
+      "status": "pending",
+      "setup_command": "git clone https://github.com/Shopify/dawn.git .claude/references/shopify-dawn-theme"
+    },
+    "middleware_template": {
+      "path": ".claude/references/shopify-middleware-template",
+      "description": "Standard Node.js Express middleware structure for Shopify integrations",
+      "used_by": [
+        "implementation-engineer",
+        "code-generator"
+      ],
+      "provides": [
+        "Express.js project structure",
+        "Shopify Admin API client patterns",
+        "Webhook handler structure",
+        "Field mapping patterns",
+        "Error handling and retry logic",
+        "Docker deployment configuration"
+      ],
+      "status": "pending",
+      "setup_command": "mkdir -p .claude/references/shopify-middleware-template && [create structure per PHASE-0-INFRASTRUCTURE-SETUP.md]"
+    },
+    "agency_stack": {
+      "path": ".claude/references/agency-stack",
+      "description": "Your agency's preferred technology stack and coding standards",
+      "used_by": [
+        "all agents"
+      ],
+      "provides": [
+        "Coding conventions",
+        "Preferred frameworks",
+        "Deployment patterns",
+        "CI/CD workflows",
+        "Testing standards"
+      ],
+      "status": "optional",
+      "setup_command": "mkdir -p .claude/references/agency-stack && [document your standards]"
+    }
+  },
+  "plugins": {
+    "ralph-wiggum": {
+      "name": "ralph-loop@claude-plugins-official",
+      "status": "pending",
+      "description": "Enforces comprehension checks before high-risk actions",
+      "install_command": "/plugin install ralph-loop@claude-plugins-official",
+      "used_by": [
+        "all agents"
+      ],
+      "triggers": [
+        "code_generation",
+        "architecture_design",
+        "data_migration",
+        "discovery_framework",
+        "middleware_build",
+        "integration_design"
+      ],
+      "integration": "Works with guardrails.json ralph_wiggum_triggers configuration",
+      "critical_for": [
+        "Preventing misunderstanding before action",
+        "Clarifying assumptions before code generation",
+        "Validating scope before data migration"
+      ]
+    }
+  },
+  "infrastructure_status": {
+    "phase_0_complete": false,
+    "mcp_servers_ready": false,
+    "reference_repos_ready": false,
+    "plugins_ready": false,
+    "last_verified": null,
+    "next_steps": [
+      "1. Install and configure 4 required MCP servers",
+      "2. Clone Shopify Dawn theme to .claude/references/",
+      "3. Create middleware template structure",
+      "4. Install Ralph Wiggum plugin",
+      "5. Run verification tests (see PHASE-0-INFRASTRUCTURE-SETUP.md)",
+      "6. Update infrastructure_status.phase_0_complete = true"
+    ]
+  },
+  "agent_configuration": {
+    "baseline_context_size": "5,000 lines (before optimization)",
+    "target_context_size": "1,875 lines (after optimization)",
+    "optimization_goal": "62% reduction in baseline context",
+    "core_agents": [
+      "orchestrator (200-250 lines)",
+      "discovery-analyst (350-400 lines)",
+      "platform-architect (400-450 lines)",
+      "implementation-engineer (400-450 lines)",
+      "quality-validator (350-400 lines)"
+    ],
+    "specialist_agents_load_on_demand": [
+      "integration-researcher (300-400 lines)",
+      "theme-specialist (300-400 lines)",
+      "launch-manager (300-400 lines)"
+    ]
+  },
+  "skills_configuration": {
+    "implemented": [
+      "validation-framework (with executable scripts)",
+      "mcp-integration",
+      "agent-identifier"
+    ],
+    "planned": [
+      "code-generator (Week 3-4)",
+      "deployment-automation (Week 5-6)",
+      "platform-knowledge (Week 3-4)",
+      "cost-estimator (Week 5-6)",
+      "monitoring-observability (Week 7-8)"
+    ]
+  },
+  "autonomous_execution": {
+    "enabled": true,
+    "permissions": "Configured in permissions.json (4-tier system)",
+    "guardrails": "Configured in guardrails.json (pre/post-execution validation)",
+    "validation_framework": "validation-framework skill with executable scripts",
+    "rollback_triggers": [
+      "Error rate >10% in first hour",
+      "Post-execution validation <90%",
+      "Critical errors detected"
+    ]
+  }
+}

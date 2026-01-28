@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Safety guardrails for autonomous execution",
+  "ralph_wiggum_triggers": {
+    "description": "Comprehension check before high-risk actions (prevents misunderstanding)",
+    "enabled": true,
+    "required_for": [
+      "code_generation",
+      "architecture_design",
+      "data_migration",
+      "discovery_framework",
+      "middleware_build",
+      "integration_design"
+    ],
+    "pattern": "Before {action}, explain understanding and wait for confirmation",
+    "skip_for": [
+      "simple_research",
+      "documentation_lookup",
+      "basic_questions"
+    ],
+    "implementation": {
+      "step_1": "Agent detects high-risk action trigger",
+      "step_2": "Agent pauses and explains its understanding",
+      "step_3": "Agent lists assumptions and questions",
+      "step_4": "Agent explicitly asks for confirmation",
+      "step_5": "Agent waits for user response",
+      "step_6": "If confirmed, proceed; if corrected, update understanding and re-confirm"
+    }
+  },
+  "pre_execution_gates": {
+    "code_generation": {
+      "description": "Validation checks before generating code",
+      "checks": [
+        "ralph_wiggum_comprehension_check",
+        "spec_complete",
+        "no_hardcoded_secrets",
+        "staging_target_only",
+        "template_exists",
+        "dependencies_valid"
+      ],
+      "pass_threshold": 1.0,
+      "failure_action": "abort_and_report"
+    },
+    "data_migration": {
+      "description": "Validation checks before migrating data",
+      "checks": [
+        "ralph_wiggum_comprehension_check",
+        "data_format_valid",
+        "no_duplicate_keys",
+        "within_platform_limits",
+        "backup_exists",
+        "rollback_plan_documented"
+      ],
+      "pass_threshold": 0.95,
+      "failure_action": "report_issues_and_wait"
+    },
+    "deployment": {
+      "description": "Validation checks before deployment",
+      "checks": [
+        "tests_pass",
+        "no_lint_errors",
+        "no_security_vulnerabilities",
+        "environment_variables_configured",
+        "rollback_procedure_ready",
+        "health_check_defined"
+      ],
+      "pass_threshold": 1.0,
+      "failure_action": "abort_and_report"
+    },
+    "architecture_design": {
+      "description": "Validation checks for architecture decisions",
+      "checks": [
+        "ralph_wiggum_comprehension_check",
+        "mcp_research_completed",
+        "app_store_search_completed",
+        "tradeoffs_documented",
+        "alternatives_considered"
+      ],
+      "pass_threshold": 1.0,
+      "failure_action": "complete_research_first"
+    }
+  },
+  "execution_monitoring": {
+    "description": "Real-time monitoring during execution",
+    "api_rate_limit_threshold": 0.8,
+    "error_rate_threshold": 0.05,
+    "response_time_multiplier": 2.0,
+    "rollback_error_rate": 0.10,
+    "monitoring_interval_seconds": 60,
+    "alerts": {
+      "rate_limit_approaching": {
+        "threshold": 0.8,
+        "action": "pause_execution_and_wait"
+      },
+      "error_rate_elevated": {
+        "threshold": 0.05,
+        "action": "analyze_errors_and_report"
+      },
+      "error_rate_critical": {
+        "threshold": 0.10,
+        "action": "trigger_automatic_rollback"
+      }
+    }
+  },
+  "post_execution_validation": {
+    "description": "Validation checks after execution completes",
+    "data_reconciliation": {
+      "checks": [
+        "record_counts_match",
+        "sample_validation_passed",
+        "no_broken_references",
+        "no_data_corruption"
+      ],
+      "sample_size": 50,
+      "pass_threshold": 0.98
+    },
+    "integration_health": {
+      "checks": [
+        "webhooks_responding",
+        "sync_jobs_running",
+        "no_queued_errors",
+        "api_credentials_valid"
+      ],
+      "pass_threshold": 1.0
+    },
+    "deployment_verification": {
+      "checks": [
+        "health_endpoint_200_ok",
+        "critical_routes_accessible",
+        "no_console_errors",
+        "performance_within_baseline"
+      ],
+      "pass_threshold": 1.0
+    }
+  },
+  "rollback_triggers": {
+    "description": "Conditions that trigger automatic rollback",
+    "error_rate": {
+      "threshold": 0.10,
+      "window_minutes": 60,
+      "action": "immediate_rollback"
+    },
+    "validation_failure": {
+      "post_execution_pass_rate": 0.90,
+      "action": "rollback_and_investigate"
+    },
+    "critical_error": {
+      "types": [
+        "payment_processing_failure",
+        "data_corruption_detected",
+        "security_breach_detected",
+        "cascading_system_failure"
+      ],
+      "action": "immediate_rollback_and_alert"
+    }
+  },
+  "anti_hallucination_enforcement": {
+    "description": "Prevent agents from fabricating information",
+    "high_risk_keywords": [
+      "fee",
+      "rate",
+      "cost",
+      "pricing",
+      "payment",
+      "security",
+      "compliance",
+      "data_loss",
+      "timeline",
+      "estimate",
+      "migration_risk"
+    ],
+    "enforcement_rules": {
+      "pricing_fees": {
+        "action": "cross_validate_2_sources",
+        "citation_required": true,
+        "flag_as": "verify_with_current_provider"
+      },
+      "timelines": {
+        "action": "document_assumptions",
+        "buffer_minimum": 0.30,
+        "state_unknowns_explicitly": true
+      },
+      "data_loss_risk": {
+        "action": "flag_severity_level",
+        "list_unmapped_fields": true,
+        "provide_workarounds": true
+      },
+      "security_compliance": {
+        "action": "reference_official_docs_only",
+        "never_synthesize": true,
+        "citation_required": true
+      },
+      "platform_capabilities": {
+        "action": "verify_with_mcp_tier_1_sources",
+        "sources": ["shopify_help_center", "shopify_dev", "official_docs"],
+        "citation_required": true
+      }
+    }
+  },
+  "mcp_failure_handling": {
+    "description": "What to do when MCP tools are unavailable",
+    "on_mcp_unavailable": {
+      "action": "use_cached_knowledge_with_disclaimer",
+      "disclaimer_template": "⚠️ Based on cached data from {date}. Unable to verify current state - please confirm at {url}",
+      "max_cache_age_days": 30
+    },
+    "on_no_definitive_answer": {
+      "action": "state_i_dont_know_explicitly",
+      "template": "I cannot find current information on {topic}. To answer this, I would need {requirement}. Please verify at {url}.",
+      "never_guess": true
+    }
+  }
+}

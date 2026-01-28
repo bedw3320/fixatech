@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Routing configuration for orchestrator to delegate queries to specialist agents",
+  "routing_rules": [
+    {
+      "agent": "discovery-analyst",
+      "keywords": [
+        "discovery",
+        "requirements",
+        "stakeholder",
+        "what questions to ask",
+        "current state",
+        "gap analysis",
+        "scope",
+        "assessment"
+      ],
+      "confidence": 0.9,
+      "not_for": [
+        "technical solution design",
+        "pricing"
+      ],
+      "delegate_to": {
+        "technical_design": "platform-architect",
+        "pricing": "cost-estimator_skill"
+      }
+    },
+    {
+      "agent": "platform-architect",
+      "keywords": [
+        "architecture",
+        "how to migrate",
+        "Shopify capabilities",
+        "integration design",
+        "API",
+        "app store",
+        "technical feasibility",
+        "migration strategy",
+        "system design"
+      ],
+      "confidence": 0.9,
+      "not_for": [
+        "data transformation code",
+        "project quoting"
+      ],
+      "delegate_to": {
+        "code_generation": "implementation-engineer",
+        "pricing": "cost-estimator_skill"
+      }
+    },
+    {
+      "agent": "implementation-engineer",
+      "keywords": [
+        "code",
+        "middleware",
+        "generate",
+        "build",
+        "data mapping",
+        "field mapping",
+        "ETL",
+        "sync logic",
+        "data transformation",
+        "API integration code"
+      ],
+      "confidence": 0.9,
+      "not_for": [
+        "Shopify platform research",
+        "project planning"
+      ],
+      "delegate_to": {
+        "platform_research": "platform-architect",
+        "planning": "discovery-analyst"
+      }
+    },
+    {
+      "agent": "quality-validator",
+      "keywords": [
+        "test",
+        "validate",
+        "deploy",
+        "quality",
+        "verification",
+        "rollback",
+        "monitoring",
+        "health check"
+      ],
+      "confidence": 0.9,
+      "not_for": [
+        "code generation",
+        "architecture design"
+      ],
+      "delegate_to": {
+        "code_generation": "implementation-engineer",
+        "architecture": "platform-architect"
+      }
+    },
+    {
+      "agent": "integration-researcher",
+      "type": "specialist",
+      "load_on_demand": true,
+      "keywords": [
+        "NetSuite",
+        "SAP",
+        "Dynamics",
+        "ERP",
+        "PIM",
+        "OMS",
+        "Akeneo",
+        "third-party integration",
+        "API documentation",
+        "external system"
+      ],
+      "confidence": 0.85,
+      "not_for": [
+        "Shopify-specific questions",
+        "building middleware"
+      ],
+      "delegate_to": {
+        "shopify_questions": "platform-architect",
+        "middleware_build": "implementation-engineer"
+      }
+    },
+    {
+      "agent": "theme-specialist",
+      "type": "specialist",
+      "load_on_demand": true,
+      "keywords": [
+        "theme",
+        "Liquid",
+        "Horizon",
+        "Dawn",
+        "storefront",
+        "frontend",
+        "design customization",
+        "template",
+        "component"
+      ],
+      "confidence": 0.85,
+      "not_for": [
+        "backend integration",
+        "platform capabilities"
+      ],
+      "delegate_to": {
+        "backend": "implementation-engineer",
+        "platform_capabilities": "platform-architect"
+      }
+    },
+    {
+      "agent": "launch-manager",
+      "type": "specialist",
+      "load_on_demand": true,
+      "keywords": [
+        "go-live",
+        "go live",
+        "cutover",
+        "launch",
+        "DNS",
+        "rollback",
+        "deployment",
+        "launch strategy",
+        "production deployment"
+      ],
+      "confidence": 0.85,
+      "not_for": [
+        "technical architecture",
+        "data migration"
+      ],
+      "delegate_to": {
+        "architecture": "platform-architect",
+        "data_migration": "implementation-engineer"
+      }
+    }
+  ],
+  "fallback_agent": "orchestrator",
+  "routing_logic": {
+    "description": "How orchestrator decides which agent to route to",
+    "steps": [
+      "1. Parse user query for keywords",
+      "2. Match keywords against routing_rules",
+      "3. Calculate confidence score for each matching agent",
+      "4. Select agent with highest confidence (if >= 0.8)",
+      "5. If no match or confidence < 0.8, orchestrator handles directly",
+      "6. If specialist agent needed, check if load_on_demand=true",
+      "7. For specialists, only load when keywords match AND confidence >= 0.85"
+    ],
+    "confidence_threshold": 0.8,
+    "specialist_confidence_threshold": 0.85
+  },
+  "multi_agent_workflows": {
+    "description": "Patterns for when multiple agents are needed",
+    "sequential": {
+      "discovery_to_architecture": {
+        "pattern": "discovery-analyst → platform-architect",
+        "trigger": "Requirements document complete",
+        "handoff": "discovery-analyst writes business-context/requirements/*.md, platform-architect reads and creates architecture/*.md"
+      },
+      "architecture_to_implementation": {
+        "pattern": "platform-architect → implementation-engineer",
+        "trigger": "Architecture approved",
+        "handoff": "platform-architect creates implementation-specs/*.md, implementation-engineer generates code"
+      },
+      "implementation_to_validation": {
+        "pattern": "implementation-engineer → quality-validator",
+        "trigger": "Code generated",
+        "handoff": "implementation-engineer commits to branch, quality-validator runs tests and validation"
+      }
+    },
+    "parallel": {
+      "concurrent_research": {
+        "pattern": "platform-architect + integration-researcher (parallel)",
+        "example": "platform-architect researches Shopify API while integration-researcher researches NetSuite API",
+        "coordination": "Orchestrator aggregates results"
+      },
+      "concurrent_builds": {
+        "pattern": "implementation-engineer + theme-specialist (parallel)",
+        "example": "implementation-engineer builds middleware while theme-specialist customizes theme",
+        "coordination": "quality-validator validates both after completion"
+      }
+    }
+  },
+  "skill_invocation": {
+    "description": "When to invoke skills instead of agents",
+    "platform-knowledge": {
+      "trigger": "Need reference documentation, platform patterns, API research workflow",
+      "invoked_by": ["platform-architect", "implementation-engineer", "theme-specialist"]
+    },
+    "code-generator": {
+      "trigger": "Need to generate middleware, field mappings, or integration code",
+      "invoked_by": ["implementation-engineer"]
+    },
+    "validation-framework": {
+      "trigger": "Need to validate data, code, or deployments",
+      "invoked_by": ["quality-validator", "implementation-engineer"]
+    },
+    "deployment-automation": {
+      "trigger": "Need to deploy to staging or execute rollback",
+      "invoked_by": ["implementation-engineer", "quality-validator"]
+    },
+    "cost-estimator": {
+      "trigger": "User asks about pricing, quotes, estimates, budget",
+      "invoked_by": ["discovery-analyst", "platform-architect"]
+    }
+  }
+}

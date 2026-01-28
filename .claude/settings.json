@@ -1,0 +1,241 @@
+{
+  "project_info": {
+    "name": "Shopify Agency Framework",
+    "version": "1.0.0",
+    "description": "Multi-agent framework for Shopify migration and integration projects",
+    "repository": "https://github.com/bedw3320/shopify-agency-framework",
+    "last_updated": "2026-01-27"
+  },
+  "infrastructure_status": {
+    "phase_0_complete": true,
+    "phase_0_completion_date": "2026-01-27",
+    "mcp_servers_configured": true,
+    "mcp_servers_count": 4,
+    "reference_repos_ready": true,
+    "ralph_loop_installed": true,
+    "validation_framework_installed": true,
+    "verification_complete": true
+  },
+  "mcp_servers": {
+    "shopify-dev-mcp": {
+      "status": "configured",
+      "tested": true,
+      "command": "npx @modelcontextprotocol/server-shopify-dev",
+      "used_by": [
+        "shopify-architect",
+        "data-migration-engineer",
+        "theme-developer"
+      ],
+      "capabilities": [
+        "learn_shopify_api",
+        "introspect_graphql_schema",
+        "search_docs_chunks",
+        "fetch_full_docs",
+        "validate_component_codeblocks",
+        "validate_graphql_codeblocks",
+        "validate_theme"
+      ],
+      "notes": "Primary source for Shopify API documentation and validation"
+    },
+    "n8n-mcp": {
+      "status": "configured",
+      "tested": true,
+      "command": "n8n-mcp",
+      "used_by": [
+        "data-migration-engineer",
+        "integration-specialist"
+      ],
+      "capabilities": [
+        "list_nodes",
+        "search_nodes",
+        "get_node_info",
+        "get_node_documentation",
+        "validate_node_operation",
+        "list_ai_tools"
+      ],
+      "notes": "Used for workflow automation recommendations and n8n integration patterns"
+    },
+    "context7": {
+      "status": "configured",
+      "tested": true,
+      "command": "npx -y @context7/mcp",
+      "used_by": [
+        "data-migration-engineer",
+        "code-generator"
+      ],
+      "capabilities": [
+        "resolve-library-id",
+        "query-docs"
+      ],
+      "notes": "Provides up-to-date documentation for Node.js, React, Express, and 1000+ other libraries"
+    },
+    "firecrawl": {
+      "status": "configured",
+      "tested": true,
+      "command": "npx -y firecrawl-mcp",
+      "requires_api_key": true,
+      "api_key_configured": true,
+      "used_by": [
+        "integration-specialist",
+        "shopify-architect"
+      ],
+      "capabilities": [
+        "firecrawl_scrape",
+        "firecrawl_crawl",
+        "firecrawl_map",
+        "firecrawl_search",
+        "firecrawl_extract",
+        "firecrawl_agent"
+      ],
+      "notes": "Configured - for scraping external API documentation (NetSuite, SAP, etc.). Successfully tested with Shopify developer documentation scraping."
+    }
+  },
+  "mcp_usage_policy": {
+    "high_risk_queries": "MUST use MCPs for verification before code generation",
+    "fallback_on_failure": "Use cached knowledge with date disclaimer and MCP error context",
+    "citation_required": true,
+    "anti_hallucination_enforcement": "All GraphQL, Liquid, and Polaris component code must be validated via MCP tools"
+  },
+  "reference_repos": {
+    "shopify_horizon_theme": {
+      "path": ".claude/references/shopify-horizon-theme",
+      "description": "Official Shopify Horizon theme (PRIMARY) - Latest theme for Liquid patterns, section architecture, and component structure",
+      "used_by": [
+        "theme-developer"
+      ],
+      "status": "ready",
+      "priority": "primary",
+      "notes": "Default reference for all theme development work. Use Dawn as fallback only if Horizon lacks specific pattern."
+    },
+    "shopify_dawn_theme": {
+      "path": ".claude/references/shopify-dawn-theme",
+      "description": "Official Shopify Dawn theme (SECONDARY) - Legacy reference theme",
+      "used_by": [
+        "theme-developer"
+      ],
+      "status": "ready",
+      "priority": "secondary",
+      "notes": "Use only when Horizon theme doesn't have the specific pattern needed"
+    },
+    "middleware_template": {
+      "path": ".claude/references/shopify-middleware-template",
+      "description": "Standard Node.js Express middleware structure for Shopify integrations",
+      "used_by": [
+        "data-migration-engineer",
+        "code-generator"
+      ],
+      "status": "ready",
+      "priority": "primary",
+      "notes": "Contains Express server, webhook handlers, GraphQL client setup, field mappings, and job scheduling patterns"
+    },
+    "agency_stack": {
+      "path": ".claude/references/agency-stack",
+      "description": "Agency-specific coding standards and technology preferences",
+      "used_by": [
+        "all agents"
+      ],
+      "status": "not_configured",
+      "priority": "optional",
+      "notes": "Create this directory to document your agency's preferred frameworks, hosting platforms, CI/CD pipelines, and code standards"
+    }
+  },
+  "plugins": {
+    "ralph-loop": {
+      "status": "installed",
+      "verified": true,
+      "description": "Iterative development methodology - feeds same prompt repeatedly, Claude sees its previous work in files/git history",
+      "commands": {
+        "/ralph-loop": "Start Ralph loop with prompt and options (--max-iterations, --completion-promise)",
+        "/cancel-ralph": "Cancel active Ralph loop"
+      },
+      "use_cases": [
+        "Well-defined tasks with clear success criteria",
+        "Iterative refinement and self-correction",
+        "Greenfield projects",
+        "Tasks requiring multiple iterations to perfect"
+      ],
+      "avoid_for": [
+        "Tasks requiring human judgment",
+        "One-shot operations",
+        "Unclear success criteria",
+        "Production debugging"
+      ],
+      "completion_signal": "Use <promise>TASK COMPLETE</promise> tag to signal completion",
+      "example": "/ralph-loop \"Build NetSuite product sync middleware\" --max-iterations 15 --completion-promise \"MIDDLEWARE COMPLETE\"",
+      "documentation": "https://ghuntley.com/ralph/"
+    },
+    "validation-framework": {
+      "status": "installed",
+      "verified": false,
+      "description": "Pre-execution validation, post-execution reconciliation, Ralph Wiggum comprehension checks",
+      "skill_name": "validation-framework",
+      "notes": "Should be tested to verify it works with current setup"
+    }
+  },
+  "verification_tests": {
+    "mcp_tests": {
+      "shopify_dev_mcp": {
+        "test": "Use shopify-dev-mcp to fetch Admin API product object schema",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      },
+      "n8n_mcp": {
+        "test": "Use n8n-mcp to list 5 Shopify integration nodes",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      },
+      "context7": {
+        "test": "Use context7 to find Express.js routing documentation",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      },
+      "firecrawl": {
+        "test": "Use firecrawl to scrape Shopify developer documentation",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      }
+    },
+    "reference_repos": {
+      "horizon_theme": {
+        "test": "Read sections from Horizon theme reference",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      },
+      "middleware_template": {
+        "test": "Verify middleware template structure exists",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      }
+    },
+    "plugin_tests": {
+      "ralph_loop": {
+        "test": "Verify /ralph-loop help command works",
+        "status": "passed",
+        "last_run": "2026-01-27"
+      },
+      "validation_framework": {
+        "test": "Test validation-framework skill with sample validation",
+        "status": "pending",
+        "last_run": null
+      }
+    }
+  },
+  "next_steps": {
+    "phase_0_remaining": [],
+    "ready_for_week_1_2": true,
+    "week_1_2_tasks": [
+      "Review and enhance existing config files (permissions.json, guardrails.json, agent-routing.json)",
+      "Test validation-framework skill",
+      "Verify orchestrator agent functionality",
+      "Test agents with real migration scenarios",
+      "Begin Week 3-4 agent optimization if foundation complete"
+    ]
+  },
+  "notes": {
+    "theme_preference": "Default to Horizon theme for all theme development. Use Dawn only as fallback if Horizon lacks specific pattern.",
+    "mcp_anti_hallucination": "ALL generated GraphQL queries, Liquid code, and Polaris components MUST be validated using respective MCP validation tools",
+    "firecrawl_configured": "Firecrawl is now configured and tested. Use for scraping external system documentation (NetSuite, SAP, custom APIs) when needed.",
+    "ralph_wiggum_importance": "Optional plugin for preventing hallucinated implementations. Should trigger before all code generation.",
+    "conversation_id": "shopify-dev-mcp conversationId from this session: 6f35b464-315c-4664-8c31-e02414ca8867 (session-specific, will change)"
+  }
+}

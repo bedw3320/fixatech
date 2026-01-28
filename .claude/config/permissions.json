@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Execution permissions for autonomous agent operations",
+  "tier_1_auto_execute": {
+    "description": "Safe, read-only operations that can execute without approval",
+    "allowed": [
+      "mcp_calls",
+      "read_files",
+      "documentation_generation",
+      "validation_checks",
+      "glob_searches",
+      "grep_searches",
+      "web_fetch",
+      "web_search"
+    ],
+    "restrictions": {
+      "no_state_changes": true,
+      "read_only": true
+    }
+  },
+  "tier_2_auto_execute_staging": {
+    "description": "Write operations restricted to staging/development environments",
+    "allowed": [
+      "code_generation",
+      "staging_deployment",
+      "test_execution",
+      "pr_creation",
+      "branch_creation",
+      "commit_to_feature_branch"
+    ],
+    "restrictions": {
+      "branch_pattern": "^(feature/|staging/|dev/|test/)",
+      "deployment_target": "staging",
+      "requires_validation": true,
+      "validation_threshold": 1.0,
+      "auto_rollback_enabled": true
+    },
+    "allowed_commands": [
+      "git:add",
+      "git:commit",
+      "git:push --set-upstream origin feature/*",
+      "npm:install",
+      "npm:run test",
+      "npm:run build",
+      "shopify:theme dev",
+      "shopify:theme push --development",
+      "railway:up",
+      "vercel:deploy --target staging"
+    ]
+  },
+  "tier_3_approval_required": {
+    "description": "Critical operations requiring explicit user approval",
+    "requires_approval": [
+      "production_deployment",
+      "dns_changes",
+      "data_deletion",
+      "payment_configuration",
+      "security_policy_changes",
+      "merge_to_main",
+      "database_migration_production"
+    ],
+    "workflow": {
+      "step_1": "Agent prepares deployment plan",
+      "step_2": "Agent runs staging validation",
+      "step_3": "Agent presents results to user",
+      "step_4": "User reviews and approves/rejects",
+      "step_5": "If approved, agent executes with confirmation"
+    }
+  },
+  "tier_4_prohibited": {
+    "description": "Operations that are never autonomous - always require manual execution",
+    "prohibited": [
+      "force_push_main",
+      "delete_production_data",
+      "bypass_security_checks",
+      "disable_guardrails",
+      "modify_payment_credentials",
+      "change_production_dns",
+      "delete_backups"
+    ],
+    "enforcement": "Hard-coded restrictions in orchestrator, cannot be overridden"
+  },
+  "execution_context": {
+    "default_environment": "development",
+    "allowed_environments": {
+      "tier_1": ["any"],
+      "tier_2": ["development", "staging", "test"],
+      "tier_3": ["production"],
+      "tier_4": ["none"]
+    }
+  }
+}
