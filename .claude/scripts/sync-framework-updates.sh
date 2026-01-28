@@ -66,8 +66,10 @@ FRAMEWORK_DIRS=(
     ".claude/skills/"
     ".claude/references/shopify-middleware-template/"
     ".gitignore"
-    "README.md"
 )
+
+# Note: README.md is intentionally excluded - each project has its own README
+# Note: .claude/settings.local.json is never synced (local dev only)
 
 # Client-specific directories to preserve (never overwrite)
 CLIENT_DIRS=(
@@ -85,6 +87,57 @@ for dir in "${FRAMEWORK_DIRS[@]}"; do
 done
 
 echo ""
+echo "🔍 Preserving client-specific data..."
+
+# Preserve project_info section in settings.json
+if [ -f .claude/settings.json ]; then
+    echo "  📝 Restoring project_info in settings.json..."
+
+    # Extract original project_info from current branch
+    PROJECT_INFO=$(git show HEAD:.claude/settings.json 2>/dev/null | grep -A 5 '"project_info"' | head -6)
+
+    if [ -n "$PROJECT_INFO" ]; then
+        # Backup current settings.json
+        cp .claude/settings.json .claude/settings.json.backup
+
+        # Extract template settings
+        TEMPLATE_SETTINGS=$(git show template/main:.claude/settings.json 2>/dev/null)
+
+        # Use Python to merge JSON (preserving project_info from current, rest from template)
+        python3 -c "
+import json
+import sys
+
+# Read current project_info
+try:
+    with open('.claude/settings.json.backup', 'r') as f:
+        current = json.load(f)
+        project_info = current.get('project_info', {})
+except:
+    project_info = {}
+
+# Read template settings
+template = '''$TEMPLATE_SETTINGS'''
+template_data = json.loads(template)
+
+# Replace project_info in template with current project_info
+if project_info:
+    template_data['project_info'] = project_info
+
+# Write merged result
+with open('.claude/settings.json', 'w') as f:
+    json.dump(template_data, f, indent=2)
+    f.write('\n')
+" 2>/dev/null && echo "  ✅ Project info preserved" || echo "  ⚠️  Could not merge - manual review needed"
+
+        # Clean up backup
+        rm -f .claude/settings.json.backup
+    else
+        echo "  ℹ️  No existing project_info found (new project)"
+    fi
+fi
+
+echo ""
 echo "🔍 Checking for conflicts..."
 
 # Check if settings.json was modified
@@ -92,7 +145,7 @@ if git diff --quiet HEAD .claude/settings.json 2>/dev/null; then
     echo "  ✅ No conflicts in settings.json"
 else
     echo "  ⚠️  settings.json has changes - review carefully!"
-    echo "     You may need to manually merge infrastructure updates"
+    echo "     Project-specific info has been preserved"
 fi
 
 echo ""
@@ -106,7 +159,8 @@ echo "   3. Update references: .claude/scripts/update-references.sh"
 echo "   4. Commit changes: git add -A && git commit -m 'chore: Sync framework updates from template'"
 echo ""
 echo "💡 Files Preserved (client-specific):"
+echo "   ├── README.md (project-specific documentation)"
+echo "   ├── .claude/settings.json → project_info (name, repo, description)"
 echo "   ├── .claude/state/ (project state)"
 echo "   ├── .claude/knowledge/ (client docs)"
-echo "   ├── .claude/plans/ (project plans)"
-echo "   └── .claude/settings.json (merged manually if needed)"
+echo "   └── .claude/plans/ (project plans)"
