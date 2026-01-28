@@ -1,9 +1,13 @@
 {
   "project_info": {
-    "name": "Shopify Agency Framework",
-    "version": "1.0.0",
-    "description": "Multi-agent framework for Shopify migration and integration projects",
-    "repository": "https://github.com/bedw3320/shopify-agency-framework",
+    "name": "Fixatech Migration",
+    "version": "0.1.0",
+    "description": "Shopify Plus migration for Fixatech (Quebec tool distributor, 4000+ products, B2B focus)",
+    "repository": "https://github.com/bedw3320/fixatech",
+    "client": "Fixatech",
+    "current_platform": "ServiceNtre 360",
+    "target_platform": "Shopify Plus",
+    "project_start": "2026-01-27",
     "last_updated": "2026-01-27"
   },
   "infrastructure_status": {
