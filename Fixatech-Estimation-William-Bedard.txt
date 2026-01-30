@@ -1,0 +1,220 @@
+Fixatech - Estimation Développement
+
+Projet: Migration WooCommerce vers Shopify Grow + Intégration ERP ServiCentre 360
+Développeur/Analyste: William Bédard
+Taux horaire: 125$/heure
+Date: 30 janvier 2026
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+RÉSUMÉ EXÉCUTIF
+
+Estimation totale: 290-380 heures de développement
+Revenus estimés: 36 250$ - 47 500$
+Durée du projet: 3-4 mois
+
+Portée du travail:
+• Migration de 4 000 produits (bilingue FR/EN)
+• Développement de la vitrine (thème Horizon + designs Figma)
+• Implémentation B2B avec SparkLayer
+• Intégration ERP en temps quasi-réel avec ServiCentre 360
+• Tests, formation et lancement
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ESTIMATION DÉTAILLÉE PAR PHASE
+
+Phase                          | Heures    | Investissement
+Admin & Rencontres            | 15-18h    | 1 875$ - 2 250$
+Migration de données (4 000)  | 50-60h    | 6 250$ - 7 500$
+Développement vitrine         | 105-130h  | 13 125$ - 16 250$
+Implémentation B2B            | 40-45h    | 5 000$ - 5 625$
+Intégration ERP*              | 55-85h    | 6 875$ - 10 625$
+Tests et AQ                   | 15-25h    | 1 875$ - 3 125$
+Formation et lancement        | 10-17h    | 1 250$ - 2 125$
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SOUS-TOTAL                    | 290-380h  | 36 250$ - 47 500$
+
+*Si un middleware ou une solution iPaaS existante est trouvée, les coûts d'intégration ERP diminueront considérablement.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DÉTAILS PAR PHASE
+
+1. ADMIN & RENCONTRES (15-18h)
+
+Approche: La découverte est en grande partie complétée. Heures restantes pour finaliser la validation du scope et révision de l'API ServiCentre.
+
+Livrables:
+• Validation finale des exigences
+• Révision de la documentation API ServiCentre (Swagger)
+• Plan d'intégration finalisé
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+2. MIGRATION DE DONNÉES (50-60h)
+
+Approche: Export CSV + application Matrixify pour l'importation dans Shopify.
+
+Complexité:
+• 4 000 produits (10x la moyenne des projets)
+• Contenu bilingue (FR/EN)
+• 5 paliers de prix B2B
+• Métadonnées et spécifications techniques
+
+Livrables:
+• Export et transformation des données
+• Mapping des colonnes Shopify
+• Importation via Matrixify
+• Validation et QA des données
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3. DÉVELOPPEMENT DE LA VITRINE (105-130h)
+
+Approche: Personnalisation du thème Horizon à partir des designs Figma fournis.
+
+Travaux inclus:
+• Sections personnalisées (header, hero, carrousels, newsletter, footer)
+• Composants UI (cartes produit, boutons, formulaires, recherche)
+• Pages templates (PDP, collection, panier)
+• Implémentation bilingue (FR/EN)
+• Optimisation mobile et responsive
+• Tests multi-appareils
+
+Note: Un développeur Shopify standard prendrait 110-130h pour ce scope.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+4. IMPLÉMENTATION B2B (40-45h)
+
+Approche: Installation et configuration de l'application SparkLayer (bien intégrée avec Shopify).
+
+Travaux inclus:
+• Installation de l'application SparkLayer
+• Configuration des groupes clients (5 paliers de prix)
+• Personnalisation du portail B2B
+• Gestion multi-utilisateurs et multi-adresses
+• Configuration des termes de paiement (Net 30)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+5. INTÉGRATION ERP (55-85h)
+
+Approche: Développement d'un middleware sur Google Cloud Platform avec connexion à l'API ServiCentre 360.
+
+Pourquoi la fourchette est large:
+L'API ServiCentre possède une documentation Swagger, mais la qualité et la complétude ne sont pas encore connues.
+
+Meilleur scénario (55h): API propre et bien documentée
+Pire scénario (85h): API complexe nécessitant des solutions de contournement
+
+Travaux inclus:
+• Développement du middleware (GCP ou plateforme similaire)
+• Connexion aux endpoints ServiCentre 360
+• Sync en temps quasi-réel:
+  - Inventaire (ServiCentre → Shopify)
+  - Prix par palier (ServiCentre → Shopify)
+  - Commandes (Shopify → ServiCentre)
+  - Statuts d'expédition (ServiCentre → Shopify)
+• Gestion des erreurs et monitoring
+• Tests d'intégration
+• Documentation technique
+
+⚠️ IMPORTANT: Si une solution middleware ou iPaaS existante est trouvée pendant la découverte, les coûts diminueront considérablement.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+6. TESTS ET ASSURANCE QUALITÉ (15-25h)
+
+Approche: Focus sur les tests du middleware. Le reste sera fait en collaboration avec l'équipe et le client avant le lancement.
+
+Travaux inclus:
+• Tests d'intégration middleware (8-10h)
+• Tests de base de la vitrine (4-6h)
+• Validation des cas limites (3-4h)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+7. FORMATION ET LANCEMENT (10-17h)
+
+Approche: Fourniture d'assets pour auto-formation. Le lancement prend généralement 1 jour ouvrable + support le lendemain si tout se passe bien.
+
+Livrables:
+• Matériel de formation (guides, FAQ)
+• Coordination du jour de lancement
+• Support post-lancement (jour suivant)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE 2: SOUTIEN POST-LANCEMENT
+⚠️ NON INCLUS dans l'enveloppe de Phase 1
+
+Portée: Corrections de bugs, ajustements mineurs, questions du client
+Estimation: 20-30 heures selon les besoins
+Facturation: Séparément après le lancement
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HYPOTHÈSES ET RISQUES
+
+Hypothèses clés:
+✓ L'API ServiCentre 360 supporte la synchronisation en temps quasi-réel
+✓ Les données produits sont propres et bien structurées
+✓ Le contenu bilingue existe dans le système source
+✓ Le plan Shopify Grow est suffisant (pas besoin de Plus)
+✓ SparkLayer est compatible avec le plan Grow
+✓ Le client fournit des retours en temps opportun
+
+Facteurs de risque:
+⚠️ API ServiCentre limitée → pourrait ajouter 10-20h de débogage
+⚠️ Problèmes de qualité des données → pourrait ajouter 10-20h de nettoyage
+⚠️ Complexité d'intégration plus élevée → la fourchette 50-80h absorbe ce risque
+⚠️ Dérive du scope → SOW serré pour prévenir
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+APPROCHE ET MÉTHODOLOGIE
+
+Outils et technologies:
+• Migration: Matrixify (app Shopify)
+• Thème: Shopify Horizon (personnalisé)
+• B2B: SparkLayer
+• Middleware: Google Cloud Platform (ou similaire)
+• ERP: API ServiCentre 360 (Swagger)
+• Développement: Approche moderne avec outils d'automatisation
+
+Gestion de projet:
+• La gestion de projet est gérée par le gestionnaire de projet (non inclus dans ces heures)
+• Réunions hebdomadaires de suivi
+• Communication asynchrone via Slack/email
+• Livraisons itératives par phase
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CRITÈRES DE SUCCÈS
+
+✅ 4 000 produits migrés avec succès (FR/EN)
+✅ Synchronisation d'inventaire en temps quasi-réel (<1 min de latence)
+✅ 5 paliers de prix B2B fonctionnels
+✅ Comptes multi-utilisateurs B2B opérationnels
+✅ Commandes envoyées automatiquement vers ServiCentre 360
+✅ Aucun temps d'arrêt pendant la migration
+✅ Performance mobile optimale
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PROCHAINES ÉTAPES
+
+1. Validation finale du scope avec l'équipe
+2. Révision des documents API ServiCentre 360
+3. Confirmation de compatibilité SparkLayer avec plan Shopify Grow
+4. Kickoff du projet
+5. Début de la phase Admin & Rencontres
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Document préparé par: William Bédard
+Date: 30 janvier 2026
+Taux: 125$/heure
+Contact: [Vos coordonnées]
