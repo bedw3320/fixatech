@@ -1,0 +1,58 @@
+{
+  "project": "Fixatech Migration",
+  "hourlyRate": 125,
+  "currency": "CAD",
+  "phases": {
+    "admin": {
+      "name": "Admin & Rencontres",
+      "estimate": "15-18h",
+      "logged": 2.5
+    },
+    "migration": {
+      "name": "Migration de données",
+      "estimate": "50-60h",
+      "logged": 0
+    },
+    "storefront": {
+      "name": "Développement vitrine",
+      "estimate": "105-130h",
+      "logged": 0
+    },
+    "b2b": {
+      "name": "Implémentation B2B",
+      "estimate": "40-45h",
+      "logged": 0
+    },
+    "erp": {
+      "name": "Intégration ERP",
+      "estimate": "55-85h",
+      "logged": 0
+    },
+    "testing": {
+      "name": "Tests et AQ",
+      "estimate": "15-25h",
+      "logged": 0
+    },
+    "training": {
+      "name": "Formation et lancement",
+      "estimate": "10-17h",
+      "logged": 0
+    }
+  },
+  "entries": [
+    {
+      "id": "2026-01-30-001",
+      "date": "2026-01-30",
+      "phase": "admin",
+      "hours": 2.5,
+      "description": "Time tracking system integration and testing",
+      "tags": []
+    }
+  ],
+  "metadata": {
+    "created": "2026-01-30",
+    "lastUpdated": "2026-01-30",
+    "totalEntries": 1,
+    "totalHours": 2.5
+  }
+}
